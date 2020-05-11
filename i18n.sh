@@ -1,0 +1,145 @@
+#!/usr/bin/env bash
+
+## Copyright (C) 2020 Ulises Jeremias Cornejo Fandos
+## Licensed under GPL v3.0
+##
+##     @script.name [OPTION] ARGUMENTS...
+##
+## Options:
+##
+##         --module=MODULE_NAME     Module name
+##         --lang=LANGUAGE_CODE     Language code. The language code is lowercased
+##                                  and the optional country code is uppercased.
+##         --project-dir=DIR_PATH   Project path. ./src by default
+##
+## Usage:
+## 
+##     @script.name --module=onegov.town --lang=fr    [Example adding a language to a module]
+##     @script.name --module=onegov.town              [Example updating the pofiles in a module]
+##
+
+ROOT=$(dirname $0)
+source "${ROOT}/util/opts/opts.sh" || exit
+source "${ROOT}/util/logs.sh" || exit
+
+LANGUAGE=${lang:-""}
+PROJECT_DIR=${project_dir:-"./src"}
+MODULE=${module:-""}
+
+if [ "${LANGUAGE}" != "" ]; then
+    if echo "${LANGUAGE}" | egrep -v '^[a-z]{2}(_[A-Z]{2})?$' > /dev/null; then
+        echo "Invalid language code, format like this: de_CH, en_GB, en, de, ..."
+        echo "the language code is lowercased, the optional country code is uppercased"
+        exit 1
+    fi
+fi
+
+if [ "${MODULE}" = "" ]; then
+    [[ -z "$documentation" ]] && parse_documentation
+    echo "$documentation"
+fi
+
+DOMAIN="${MODULE}"
+MODULE_PATH="${PROJECT_DIR}/${MODULE}"
+MODULE="${MODULE/-/_}"
+SEARCH_PATH="${MODULE_PATH}/${MODULE//.//}"
+LOCALE_PATH="${SEARCH_PATH}/locale"
+POT_FILE="${LOCALE_PATH}/${DOMAIN}.pot"
+
+# TODO: Look for a command to create pot files
+POT_CREATE=""
+
+die() {
+    log_failed "${1}"
+    exit 1
+}
+
+command_exists() {
+    type "$1" &> /dev/null;
+}
+
+# try to find the gettext tools we need - on linux they should be available,
+# on osx we try to get them from homebrew
+if command_exists brew; then
+    if brew list | grep gettext -q; then
+        brew_prefix=$(brew --prefix)
+        gettext_path=$(brew info gettext | grep "${brew_prefix}" | awk '{print $1; exit}')
+
+        MSGINIT="${gettext_path}/bin/msginit"
+        MSGMERGE="${gettext_path}/bin/msgmerge"
+        MSGFMT="${gettext_path}/bin/msgfmt"
+    else
+        die "Homebrew was found but gettext is not installed. Install gettext using 'brew install gettext'"
+    fi
+else
+    MSGINIT=$(which msginit)
+    MSGMERGE=$(which msgmerge)
+    MSGFMT=$(which msgfmt)
+fi
+
+if [ ! -e "${MSGINIT}" ]; then
+    die "msginit command could not be found, be sure to install gettext"
+fi
+
+if [ ! -e "${MSGMERGE}" ]; then
+    die "msgmerge command could not be found, be sure to install gettext"
+fi
+
+if [ ! -e "${MSGFMT}" ]; then
+    die "msgfmt command could not be found, be sure to install gettext"
+fi
+
+if [ ! -d "${MODULE_PATH}" ]; then
+    die "${MODULE_PATH} does not exist"
+fi
+
+if [ ! -d "${SEARCH_PATH}" ]; then
+    die "${SEARCH_PATH} does not exist"
+fi
+
+if [ ! -e "${POT_CREATE}" ]; then
+    die "${POT_CREATE} does not exist"
+fi
+
+if [ ! -e "${LOCALE_PATH}" ]; then
+    log_warn "${LOCALE_PATH} does not exist"
+    describe "creating"
+    mkdir "${LOCALE_PATH}"
+fi
+
+if [ ! -e "${POT_FILE}" ]; then
+    log_warn "${POT_FILE} does not exist"
+    describe "creating"
+    touch "${POT_FILE}"
+fi
+
+# language given, create catalog
+if [ -n "${LANGUAGE}" ]; then
+    describe "Creating language ${LANGUAGE}"
+
+    if [ -e "${LOCALE_PATH}/${LANGUAGE}/LC_MESSAGES" ]; then
+        die "Cannot initialize language '${LANGUAGE}', it exists already!"
+    fi
+
+    mkdir -p "${LOCALE_PATH}/${LANGUAGE}/LC_MESSAGES"
+
+    DOMAIN_FILE="${LOCALE_PATH}/${LANGUAGE}/LC_MESSAGES/${DOMAIN}.po"
+
+    $MSGINIT -i "${LOCALE_PATH}/${DOMAIN}.pot" -o "${LOCALE_PATH}/${DOMAIN_FILE}" -l "${LANGUAGE}"
+fi
+
+describe "Extract messages"
+$POT_CREATE "${SEARCH_PATH}" -o "${POT_FILE}"
+log_success "Extracted!"
+
+describe "Update translations"
+for po in "${LOCALE_PATH}"/*/LC_MESSAGES/$DOMAIN.po; do
+    $MSGMERGE --no-location --no-fuzzy-matching -o "${po}" "${po}" "${POT_FILE}"
+done
+log_success "Updated!"
+
+describe "Compile message catalogs"
+for po in "${LOCALE_PATH}"/*/LC_MESSAGES/*.po; do
+    $MSGFMT -o "${po%.*}.mo" "$po"
+done
+log_success "Finished :D"
