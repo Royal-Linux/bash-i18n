@@ -7,7 +7,8 @@
 ##
 ## Options:
 ##
-##     --output-file=POT_FILE_PATH    POT file path
+##         --project=PROJECT_NAME         Project name for internal setup. "generic" by default
+##         --output-file=POT_FILE_PATH    POT file path
 ##
 ## Usage:
 ## 
@@ -18,15 +19,12 @@ ROOT=$(dirname $0)
 source "${ROOT}/util/opts/opts.sh" || exit
 
 POT_FILE_PATH=${output_file}
+PROJECT_NAME=${project:-"generic"}
 PROJECT_DIR=${arguments[0]}
-
-ROOT=$(dirname $0)
 
 if [ ! -d "${ROOT}/i18n-tools" ]; then
 	git clone https://github.com/ArchRoyal-Linux/i18n-tools.git
 fi
  
-git pull 1>&1 | grep "Already up-to-date."
-
-echo "executing php ${ROOT}/i18n-tools/makepot.php generic ${PROJECT_DIR} ${POT_FILE_PATH}"
-php "${ROOT}/i18n-tools/makepot.php" generic "${PROJECT_DIR}" "${POT_FILE_PATH}"
+echo "executing php ${ROOT}/i18n-tools/makepot.php ${PROJECT_NAME} ${PROJECT_DIR} ${POT_FILE_PATH}"
+php "${ROOT}/i18n-tools/makepot.php" "${PROJECT_NAME}" "${PROJECT_DIR}" "${POT_FILE_PATH}"

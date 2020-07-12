@@ -1,14 +1,42 @@
+# Copyright (C) 2020 ArchRoyal-Linux
+# This file is distributed under the same license as the ArchRoyal-Linux package.
 msgid ""
 msgstr ""
-"Project-Id-Version: bash-i 18n\n"
-"PO-Revision-Date: 2020-07-12 16:09-0300\n"
-"Last-Translator:  <ulisescf.24@gmail.com>\n"
+"Project-Id-Version: ArchRoyal-Linux {version}\n"
+"Report-Msgid-Bugs-To: https://github.com/ArchRoyal-Linux/installer/issues\n"
+"POT-Creation-Date: 2020-07-12 22:39:46+00:00\n"
+"PO-Revision-Date: 2020-07-12 19:39-0300\n"
+"Last-Translator:  <ulisesjcf@melody>\n"
 "Language-Team: English\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "hello"
-msgstr "Hello!"
+#~ msgid "Hello!"
+#~ msgstr "Hola!"
+
+#~ msgid "Bye $USER!"
+#~ msgstr "Adios $USER!"
+
+#~ msgid "Here $THERE $COUNT $FRUIT"
+#~ msgstr "Aqui $THERE $COUNT $FRUIT"
+
+#~ msgid "there is"
+#~ msgstr "hay"
+
+#~ msgid "there are"
+#~ msgstr "hay"
+
+#~ msgid "orange"
+#~ msgstr "naranja"
+
+#~ msgid "oranges"
+#~ msgstr "naranjas"
+
+#~ msgid "emptylang"
+#~ msgstr "sin lenguage"
+
+#~ msgid "language set to $L"
+#~ msgstr "lenguaje establecido a $L"
