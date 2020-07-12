@@ -2,7 +2,7 @@
 
 Helper scripts to add and update gettext translations to ArchRoyal modules.
 
-## I18n
+## i18n
 
 ### Requirements
 
