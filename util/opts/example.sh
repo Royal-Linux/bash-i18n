@@ -10,6 +10,7 @@
 ##     @script.name [option] ARGUMENTS...
 ##
 ## Options:
+##
 ##     -h, --help              All client scripts have this, it can be omitted.
 ##     -o, --some-option       This is a boolean option. Long version is
 ##                             mandatory, and can be specified before or

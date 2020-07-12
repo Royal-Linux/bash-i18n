@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+## Copyright (C) 2020 Ulises Jeremias Cornejo Fandos
+## Licensed under GPL v3.0
+##
+##     @script.name [OPTION] ARGUMENTS...
+##
+## Options:
+##
+##     --output-file=POT_FILE_PATH    POT file path
+##
+## Usage:
+## 
+##     @script.name project_dir -o=fr    [Example creating .pot file]
+##
+
+ROOT=$(dirname $0)
+source "${ROOT}/util/opts/opts.sh" || exit
+
+POT_FILE_PATH=${output_file}
+PROJECT_DIR=${arguments[0]}
+
+ROOT=$(dirname $0)
+
+if [ ! -d "${ROOT}/i18n-tools" ]; then
+	git clone https://github.com/ArchRoyal-Linux/i18n-tools.git
+fi
+ 
+git pull 1>&1 | grep "Already up-to-date."
+
+echo "executing php ${ROOT}/i18n-tools/makepot.php generic ${PROJECT_DIR} ${POT_FILE_PATH}"
+php "${ROOT}/i18n-tools/makepot.php" generic "${PROJECT_DIR}" "${POT_FILE_PATH}"

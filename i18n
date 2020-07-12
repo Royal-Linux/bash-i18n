@@ -8,7 +8,6 @@
 ##     @script.name [OPTION] ARGUMENTS...
 ##
 ## Options:
-##
 ##         --module=MODULE_NAME     Module name
 ##         --lang=LANGUAGE_CODE     Language code. The language code is lowercased
 ##                                  and the optional country code is uppercased.
@@ -48,8 +47,7 @@ SEARCH_PATH="${MODULE_PATH}/${MODULE//.//}"
 LOCALE_PATH="${SEARCH_PATH}/locale"
 POT_FILE="${LOCALE_PATH}/${DOMAIN}.pot"
 
-# TODO: Look for a command to create pot files
-POT_CREATE=""
+POT_CREATE="${ROOT}/makepot"
 
 die() {
     log_failed "${1}"
@@ -99,9 +97,9 @@ if [ ! -d "${SEARCH_PATH}" ]; then
     die "${SEARCH_PATH} does not exist"
 fi
 
-# if [ ! -e "${POT_CREATE}" ]; then
-    # die "${POT_CREATE} does not exist"
-# fi
+if [ ! -e "${POT_CREATE}" ]; then
+    die "${POT_CREATE} does not exist"
+fi
 
 if [ ! -e "${LOCALE_PATH}" ]; then
     log_warn "${LOCALE_PATH} does not exist"
@@ -130,9 +128,9 @@ if [ -n "${LANGUAGE}" ]; then
     $MSGINIT -i "${LOCALE_PATH}/${DOMAIN}.pot" -o "${DOMAIN_FILE}" -l "${LANGUAGE}"
 fi
 
-# describe "Extract messages"
-# $POT_CREATE "${SEARCH_PATH}" -o "${POT_FILE}"
-# log_success "Extracted!"
+describe "Extract messages"
+$POT_CREATE --output-file="${POT_FILE}" "${SEARCH_PATH}"
+log_success "Extracted!"
 
 describe "Update translations"
 for po in "${LOCALE_PATH}"/*/LC_MESSAGES/$DOMAIN.po; do
