@@ -14,8 +14,8 @@
 ##
 ## Usage:
 ## 
-##     @script.name --module=onegov.town --lang=fr    [Example adding a language to a module]
-##     @script.name --module=onegov.town              [Example updating the pofiles in a module]
+##     @script.name --module=module.name --lang=fr    [Example adding a language to a module]
+##     @script.name --module=module.name              [Example updating the pofiles in a module]
 ##
 
 ROOT=$(dirname $0)
@@ -97,9 +97,9 @@ if [ ! -d "${SEARCH_PATH}" ]; then
     die "${SEARCH_PATH} does not exist"
 fi
 
-if [ ! -e "${POT_CREATE}" ]; then
-    die "${POT_CREATE} does not exist"
-fi
+# if [ ! -e "${POT_CREATE}" ]; then
+    # die "${POT_CREATE} does not exist"
+# fi
 
 if [ ! -e "${LOCALE_PATH}" ]; then
     log_warn "${LOCALE_PATH} does not exist"
@@ -125,15 +125,16 @@ if [ -n "${LANGUAGE}" ]; then
 
     DOMAIN_FILE="${LOCALE_PATH}/${LANGUAGE}/LC_MESSAGES/${DOMAIN}.po"
 
-    $MSGINIT -i "${LOCALE_PATH}/${DOMAIN}.pot" -o "${LOCALE_PATH}/${DOMAIN_FILE}" -l "${LANGUAGE}"
+    $MSGINIT -i "${LOCALE_PATH}/${DOMAIN}.pot" -o "${DOMAIN_FILE}" -l "${LANGUAGE}"
 fi
 
-describe "Extract messages"
-$POT_CREATE "${SEARCH_PATH}" -o "${POT_FILE}"
-log_success "Extracted!"
+# describe "Extract messages"
+# $POT_CREATE "${SEARCH_PATH}" -o "${POT_FILE}"
+# log_success "Extracted!"
 
 describe "Update translations"
 for po in "${LOCALE_PATH}"/*/LC_MESSAGES/$DOMAIN.po; do
+    describe "Updating $po"
     $MSGMERGE --no-location --no-fuzzy-matching -o "${po}" "${po}" "${POT_FILE}"
 done
 log_success "Updated!"
