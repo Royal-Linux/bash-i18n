@@ -7,7 +7,6 @@ Helper scripts to add and update gettext translations to ArchRoyal modules.
 ### Requirements
 
 - `gettext`
-- `php@> 7`
 
 To use i18n, gettext must be installed. On most linux distros this is a given. On OSX it is recommended to install gettext with homebrew:
 

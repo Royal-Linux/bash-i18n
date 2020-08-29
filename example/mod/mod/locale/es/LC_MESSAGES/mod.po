@@ -1,15 +1,45 @@
-# Copyright (C) 2020 ArchRoyal-Linux
-# This file is distributed under the same license as the ArchRoyal-Linux package.
+# Spanish translations for bash-i package.
+# Copyright (C) 2020 THE bash-i'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the bash-i package.
+#  <ulisesjcf@melody>, 2020.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: ArchRoyal-Linux {version}\n"
-"Report-Msgid-Bugs-To: https://github.com/ArchRoyal-Linux/installer/issues\n"
-"POT-Creation-Date: 2020-07-12 22:39:34+00:00\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2020-07-12 19:39-0300\n"
+"Project-Id-Version: bash-i 18n\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-08-29 18:53-0300\n"
+"PO-Revision-Date: 2020-08-29 18:50-0300\n"
 "Last-Translator:  <ulisesjcf@melody>\n"
 "Language-Team: Spanish <es@tp.org.es>\n"
 "Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Hello!"
+msgstr "Hola!"
+
+msgid "Bye $USER!"
+msgstr "Adios $USER!"
+
+msgid "Here $THERE $COUNT $FRUIT"
+msgstr "Aqui $THERE $COUNT $FRUIT"
+
+msgid "there is"
+msgstr "hay"
+
+msgid "there are"
+msgstr "hay"
+
+msgid "orange"
+msgstr "naranja"
+
+msgid "oranges"
+msgstr "naranjas"
+
+msgid "emptylang"
+msgstr "sin lenguage"
+
+msgid "language set to $L"
+msgstr "lenguaje establecido a $L"
