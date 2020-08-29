@@ -43,10 +43,9 @@ if [ "${MODULE}" = "" ]; then
     echo "$documentation"
 fi
 
-DOMAIN="${MODULE}"
+DOMAIN="${MODULE/-/_}"
 MODULE_PATH="${PROJECT_DIR}/${MODULE}"
-MODULE="${MODULE/-/_}"
-SEARCH_PATH="${MODULE_PATH}/${MODULE//.//}"
+SEARCH_PATH="${MODULE_PATH}/${DOMAIN//.//}"
 LOCALE_PATH="${SEARCH_PATH}/locale"
 POT_FILE="${LOCALE_PATH}/${DOMAIN}.pot"
 
