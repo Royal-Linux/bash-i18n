@@ -19,11 +19,11 @@ $ brew install gettext
 > Add a language to a module:
 
 ```sh
-$ ./i18n --module=archroyal.module --lang=fr
+$ ./i18n --module=<module> --lang=fr
 ```
 
 > Extract the messages from a module (update the translation files)
 
 ```sh
-$ ./i18n --module=archroyal.module
+$ ./i18n --module=<module>
 ```

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ArchRoyal-Linux {version}\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-29 18:53-0300\n"
+"POT-Creation-Date: 2020-08-29 20:37-0300\n"
 "PO-Revision-Date: 2020-07-12 19:39-0300\n"
 "Last-Translator:  <ulisesjcf@melody>\n"
 "Language-Team: English\n"
@@ -15,28 +15,28 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Hello!"
-msgstr "Hola!"
+msgstr "Hello!"
 
 msgid "Bye $USER!"
-msgstr "Adios $USER!"
+msgstr "Bye $USER!"
 
 msgid "Here $THERE $COUNT $FRUIT"
-msgstr "Aqui $THERE $COUNT $FRUIT"
+msgstr "Here $THERE $COUNT $FRUIT"
 
 msgid "there is"
-msgstr "hay"
+msgstr "there is"
 
 msgid "there are"
-msgstr "hay"
+msgstr "there are"
 
 msgid "orange"
-msgstr "naranja"
+msgstr "orange"
 
 msgid "oranges"
-msgstr "naranjas"
+msgstr "oranges"
 
 msgid "emptylang"
-msgstr "sin lenguage"
+msgstr "emptylang"
 
 msgid "language set to $L"
-msgstr "lenguaje establecido a $L"
+msgstr "language set to $L"
